@@ -2,11 +2,12 @@
 import React, { useState, useEffect } from 'react';
 import { createRoot } from 'react-dom/client';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Container, Row } from 'react-bootstrap';
+import { Container, Row, Button, Modal, Form } from 'react-bootstrap';
 import axios from 'axios';
 import SearchForm from './SearchForm';
 import ArtistCard from './ArtistCard';
 import ContractModal from './ContractModal';
+import CustomNavbar from './Navbar';
 
 const CLIENT_ID = "20c085fee3c645afb8047ecd27833b1e"
 const CLIENT_SECRET = "a259f3b59fe44e5392682519c1826616"
@@ -18,13 +19,19 @@ function App() {
     const [selectedArtist, setSelectedArtist] = useState(null);
     const [formData, setFormData] = useState({
         name: '',
-        artist: '', // Alteração aqui para armazenar o nome do artista selecionado
+        artist: '',
         fee: '',
-        eventDate: '', // Alteração aqui para armazenar a data no formato desejado
+        eventDate: '',
         address: ''
     });
     const [successMessage, setSuccessMessage] = useState('');
     const [showModal, setShowModal] = useState(false);
+    const [loggedIn, setLoggedIn] = useState(false);
+    const [loginModalShow, setLoginModalShow] = useState(false);
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [authenticated, setAuthenticated] = useState(false);
+
 
     useEffect(() => {
         var authParameters = {
@@ -100,28 +107,114 @@ function App() {
         }
         setShowModal(false);
     }
+    // Função para lidar com o login
+    function handleLogin(username, password) {
+        // Enviar solicitação de login para o backend Laravel
+        axios.post('http://localhost:8000/login', { email: username, password: password })
+            .then(response => {
+                console.log('Resposta do backend:', response); // Verifica o conteúdo da resposta
+                // Verifica se a resposta é bem-sucedida
+                if (response.status === 200) {
+                    // Login bem-sucedido
+                    setLoggedIn(true);
+                    setSuccessMessage('Login bem-sucedido!');
+                    setLoginModalShow(false); // Fechar o modal de login
+                } else {
+                    // Credenciais inválidas
+                    setSuccessMessage('');
+                }
+            })
+            .catch(error => {
+                console.error('Erro ao fazer login:', error);
+                setSuccessMessage('Erro ao fazer login: ' + error.message); // Exibe o erro detalhado
+            });
+    }
+
+    // Função para lidar com o logout
+    function handleLogout() {
+        // Definir o estado 'loggedIn' como falso ao fazer logout
+        setLoggedIn(false);
+    }
+
+
 
     return (
         <Container>
-            <h1>Contratação de Artistas</h1>
-            <SearchForm setSearchQuery={setSearchQuery} search={search} /> {/* Passando a função de busca como propriedade */}
-            <Row className="mx-2 row-cols-4">
-                {artistResults.map(artist => (
-                    <ArtistCard key={artist.id} artist={artist} handleSelectArtist={handleSelectArtist} />
-                ))}
-            </Row>
-            <ContractModal
-                showModal={showModal}
-                setShowModal={setShowModal}
-                selectedArtist={selectedArtist}
-                formData={formData}
-                handleInputChange={handleInputChange}
-                handleSubmit={handleSubmit}
+            {/* Barra de navegação personalizada */}
+            <CustomNavbar 
+                handleLogin={() => setLoginModalShow(true)} 
+                loggedIn={loggedIn} 
+                handleLogout={handleLogout} 
+                showMyClientsButton={loggedIn}
+                handleMyClientsClick={() => setShowModal(true)} // Corrigido para handleMyClientsClick
             />
-            {successMessage && <p>{successMessage}</p>}
+            
+            {/* Conteúdo */}
+            {loggedIn && (
+                <>
+                    <h1>Contratação de Artistas</h1>
+                    <SearchForm setSearchQuery={setSearchQuery} search={search} />
+                    
+                    <Row className="mx-2 row-cols-4">
+                        {artistResults.map(artist => (
+                            <ArtistCard key={artist.id} artist={artist} handleSelectArtist={handleSelectArtist} />
+                        ))}
+                    </Row>
+                    <ContractModal
+                        showModal={showModal}
+                        setShowModal={setShowModal}
+                        selectedArtist={selectedArtist}
+                        formData={formData}
+                        handleInputChange={handleInputChange}
+                        handleSubmit={handleSubmit}
+                    />
+
+
+                    
+                </>
+            )}
+
+            {/* Modal de login */}
+            <Modal show={loginModalShow} onHide={() => setLoginModalShow(false)}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Login</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Form>
+                        <Form.Group controlId="username">
+                            <Form.Label>Username</Form.Label>
+                            <Form.Control type="text" placeholder="Enter username" onChange={e => setUsername(e.target.value)} />
+                        </Form.Group>
+                        <Form.Group controlId="password">
+                            <Form.Label>Password</Form.Label>
+                            <Form.Control type="password" placeholder="Password" onChange={e => setPassword(e.target.value)} />
+                        </Form.Group>
+                    </Form>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={() => setLoginModalShow(false)}>Close</Button>
+                    <Button variant="primary" onClick={() => handleLogin(username, password)}>Login</Button>
+                </Modal.Footer>
+            </Modal>
+
+            {/* Modal de sucesso ou falha no login */}
+            <Modal show={successMessage !== ''} onHide={() => setSuccessMessage('')}>
+                <Modal.Header closeButton>
+                    <Modal.Title>{successMessage === 'Login bem-sucedido!' ? 'Login bem-sucedido!' : 'Falha ao fazer login!'}</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    {successMessage === 'Login bem-sucedido!'
+                        ? 'Seu login foi bem-sucedido. Agora você pode acessar todas as funcionalidades do aplicativo.'
+                        : 'Ocorreu um erro ao fazer login. Por favor, verifique suas credenciais e tente novamente.'}
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="primary" onClick={() => setSuccessMessage('')}>Fechar</Button>
+                </Modal.Footer>
+            </Modal>
         </Container>
     );
 }
+    
 
 const root = document.getElementById('app');
 createRoot(root).render(<App />);
