@@ -6,8 +6,8 @@ import MyClientsButton from './MyClientsButton';
 
 function CustomNavbar({ handleLogin, loggedIn, handleLogout, showMyClientsButton, handleMyClientsClick }) {
     return (
-        <Navbar bg="light" expand="lg">
-            <Navbar.Brand href="#home">Your App</Navbar.Brand>
+        <Navbar bg="light" expand="lg" className="custom-navbar mb-6">
+            <Navbar.Brand href="#home" className="brand-text">Your App</Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto">
@@ -19,9 +19,9 @@ function CustomNavbar({ handleLogin, loggedIn, handleLogout, showMyClientsButton
                 <Nav className="ml-auto">
                     {/* Adicione os botões de login/logout aqui */}
                     {!loggedIn ? (
-                        <Button variant="primary" onClick={handleLogin}>Login</Button>
+                        <Button variant="primary" onClick={handleLogin} className="nav-button ml-2">Login</Button>
                     ) : (
-                        <Button variant="primary" onClick={handleLogout}>Logout</Button>
+                        <Button variant="primary" onClick={handleLogout} className="nav-button ml-2">Logout</Button>
                     )}
                 </Nav>
             </Navbar.Collapse>
@@ -30,3 +30,4 @@ function CustomNavbar({ handleLogin, loggedIn, handleLogout, showMyClientsButton
 }
 
 export default CustomNavbar;
+

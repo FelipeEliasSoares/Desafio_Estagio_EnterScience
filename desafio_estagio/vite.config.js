@@ -7,8 +7,11 @@ export default defineConfig({
         react(),
 
         laravel({
-            input: ['resources/css/app.css', 'resources/js/app.js'],
+            input: ['resources/js/app.js'], // Remova 'resources/css/app.css'
             refresh: true,
         }),
     ],
+    build: {
+        cssCodeSplit: false, // Desative a divisão de código CSS
+    },
 });

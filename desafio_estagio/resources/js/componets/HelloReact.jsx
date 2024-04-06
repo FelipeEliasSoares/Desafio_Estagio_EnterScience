@@ -8,6 +8,7 @@ import SearchForm from './SearchForm';
 import ArtistCard from './ArtistCard';
 import ContractModal from './ContractModal';
 import CustomNavbar from './Navbar';
+import '/opt/lampp/htdocs/Desafio_Estagio/desafio_estagio/resources/css/app.css';
 
 const CLIENT_ID = "20c085fee3c645afb8047ecd27833b1e"
 const CLIENT_SECRET = "a259f3b59fe44e5392682519c1826616"
@@ -99,6 +100,7 @@ function App() {
     async function handleSubmit(event) {
         event.preventDefault();
         try {
+            console.log('Dados enviados para hire-artist:', formData); // Adiciona esta linha para exibir os dados no console
             const response = await axios.post('http://localhost:8000/hire-artist', formData);
             console.log(response.data);
             setSuccessMessage(response.data.message);
