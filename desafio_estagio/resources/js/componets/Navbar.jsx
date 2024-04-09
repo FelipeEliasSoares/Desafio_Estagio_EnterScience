@@ -1,32 +1,48 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Navbar, Nav, Button } from 'react-bootstrap';
 import MyClientsButton from './MyClientsButton';
 
 function CustomNavbar({ handleLogin, loggedIn, handleLogout, showMyClientsButton, handleMyClientsClick }) {
+    const [isMobile, setIsMobile] = useState(false);
+
+    useEffect(() => {
+        const handleResize = () => {
+            // Verifica se o tamanho da tela é menor que 768 pixels (tipicamente para dispositivos móveis)
+            setIsMobile(window.innerWidth < 768);
+        };
+
+        // Adiciona um listener para o evento resize
+        window.addEventListener('resize', handleResize);
+
+        // Chamada inicial para configurar o estado de isMobile
+        handleResize();
+
+        // Remove o listener do evento resize ao desmontar o componente
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
     return (
         <header id="header" className="d-flex align-items-center header-transparent" style={{ width: '100%', backgroundColor: 'rgba(18, 214, 61, 0.918)', position: 'relative', height: '60px' }}>
             <div className="container d-flex align-items-center justify-content-between" style={{ paddingTop: '10px', paddingBottom: '10px' }}>
 
-                <h4 style={{ margin: '0' }}><a href="index.php">Avatar Korra</a></h4>
+                <h4 style={{ margin: '0', marginBottom: isMobile ? '10px' : '0', fontSize: isMobile ? '1.5rem' : '2rem' }}>Contract-me</h4>
 
-                <Navbar expand="lg" style={{ margin: '0' }}>
-                    <Navbar.Toggle aria-controls="basic-navbar-nav" className="bi bi-list mobile-nav-toggle" />
-                    <Navbar.Collapse id="basic-navbar-nav">
-                        <Nav className="mr-auto">
+                <Navbar expand="lg" style={{ margin: '0', width: isMobile ? '80%' : 'auto' }}>
+                    
+                        
+                        <Nav className={isMobile ? "flex-column align-items-center" : "mr-auto"}>
                             {showMyClientsButton && (
-                                <Nav.Link href="#" onClick={handleMyClientsClick}><MyClientsButton></MyClientsButton></Nav.Link>
+                                <Nav.Link href="#" className={isMobile ? "mb-2 text-center" : ""}><MyClientsButton /></Nav.Link>
                             )}
                         </Nav>
-                    </Navbar.Collapse>
-                    <Navbar.Collapse className="justify-content-end">
-                        <Nav>
+                        <Nav className={isMobile ? "flex-column align-items-center" : "mr-auto"}>
                             {!loggedIn ? (
-                                <Button variant="outline-success" onClick={handleLogin} className="nav-button"> Login</Button>
+                                <Button variant="success" onClick={handleLogin} className={isMobile ? "nav-button btn-block" : "nav-button"}>Login</Button>
                             ) : (
-                                <Button variant="outline-success" onClick={handleLogout} className="nav-button">Logout</Button>
+                                <Button variant="success" onClick={handleLogout} className={isMobile ? "nav-button btn-block" : "nav-button"}>Logout</Button>
                             )}
                         </Nav>
-                    </Navbar.Collapse>
+                    
                 </Navbar>
 
             </div>

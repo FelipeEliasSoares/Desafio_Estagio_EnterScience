@@ -5,11 +5,10 @@ import { Container, Row, Button, Modal, Form, Spinner } from 'react-bootstrap';
 import axios from 'axios';
 import SearchForm from './SearchForm';
 import ArtistCard from './ArtistCard';
+import ArtistCardNoContract from './ArtistCardNoContract';
 import ContractModal from './ContractModal';
 import CustomNavbar from './Navbar';
-import HeroSection from './HeroSection';
 import '/opt/lampp/htdocs/Desafio_Estagio/desafio_estagio/resources/css/app.css';
-
 
 const CLIENT_ID = "20c085fee3c645afb8047ecd27833b1e"
 const CLIENT_SECRET = "a259f3b59fe44e5392682519c1826616"
@@ -32,7 +31,6 @@ function App() {
     const [loginModalShow, setLoginModalShow] = useState(false);
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [authenticated, setAuthenticated] = useState(false);
     const [loading, setLoading] = useState(false); 
     const [addSuccessMessage, setAddSuccessMessage] = useState('');
 
@@ -58,10 +56,10 @@ function App() {
              // Inicia o carregamento
             setTimeout(() => {
                 setArtistResults([
-                    { id: '1', name: 'Artista 1', image: 'https://via.placeholder.com/150' },
-                    { id: '2', name: 'Artista 2', image: 'https://via.placeholder.com/150' },
-                    { id: '3', name: 'Artista 3', image: 'https://via.placeholder.com/150' },
-                    { id: '4', name: 'Artista 4', image: 'https://via.placeholder.com/150' },
+                    { id: '1', name: 'David Guetta', image: 'https://upload.wikimedia.org/wikipedia/commons/4/4f/2023-11-16_Gala_de_los_Latin_Grammy%2C_22_%28David_Guetta%29.jpg' },
+                    { id: '2', name: 'Marshmello', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSgbGGwaAm0PCpVka58ITZtA_A50kYeJQ9BXvykPuu_TQ&s' },
+                    { id: '3', name: '50 cent', image: 'https://image-cdn-ak.spotifycdn.com/image/ab67706c0000da8436dcd268872e695ce116428c' },
+                    { id: '4', name: 'Gusttavo Lima', image: 'https://www.pida.com.br/fotos/pida_noticias/3680/IMAGEM_INTERNA_0.jpg?v=89e1fd0142714bd' },
                 ]);
                 setLoading(false); // Finaliza o carregamento
             }, 2000); // Simula um atraso de 2 segundos
@@ -166,7 +164,7 @@ function App() {
                 handleMyClientsClick={() => setShowModal(true)}
             /> 
             {/* Conteúdo */}
-            <section id="hero" style={{ width: '100%', backgroundColor: 'black', position: 'relative', padding: '120px 0 0 0' }}>
+            <section id="hero" style={{ width: '100%', backgroundColor: 'black', position: 'relative', padding: '100px 0 150px 0', minHeight: 'calc(100vh - 200px)' }}>
                 
                 <div className="container">
                     <div className="row justify-content-between mb-4">
@@ -175,15 +173,30 @@ function App() {
                                 <h1 style={{ margin: '0 0 20px 0', fontSize: '48px', fontWeight: 700, lineHeight: '56px', color: '#ffffff' }}>Contrate um Cantor</h1>
                                 <h2 style={{ color: 'rgba(255, 255, 255, 0.8)', marginBottom: '40px', fontSize: '24px' }}>Encante seu público com músicas cativantes e performances emocionantes.</h2>
                                 <div className="text-center text-lg-start">
-                                    <a href="#" className="btn-get-started scrollto" style={{ fontFamily: '"Montserrat", sans-serif', fontWeight: 500, fontSize: '16px', letterSpacing: '1px', display: 'inline-block', padding: '10px 30px', borderRadius: '40px', transition: '0.5s', color: '#fff', background: '#ff4500' }}>Contrate Agora!</a>
+                                    <button className="btn-get-started" onClick={() => setLoginModalShow(true)}>Contrate Agora!</button>
                                 </div>
                             </div>
                         </div>
                         <div className="col-lg-4 order-1 order-lg-2 hero-img " data-aos="zoom-out" data-aos-delay="300">
-                            <img src="https://img.freepik.com/fotos-gratis/cantor-negro-apaixonado-se-apresentando-contra-o-vermelho_1258-26348.jpg?w=1380&t=st=1712622504~exp=1712623104~hmac=bc9af2074f2c9104203cb0cca3801bf86c0315836640d42a1731cb01237a528c" className="img-fluid mb-5" alt="" style={{ marginRight: '-30px',borderRadius:'20px',}} />
+                            <img src="https://img.freepik.com/fotos-gratis/cantor-negro-apaixonado-se-apresentando-contra-o-vermelho_1258-26348.jpg?w=1380&t=st=1712622504~exp=1712623104~hmac=bc9af2074f2c9104203cb0cca3801bf86c0315836640d42a1731cb01237a528c" className="img-fluid mb-5" alt="" style={{ marginRight: '-30px', borderRadius:'20px', }} />
                         </div>
                     </div>
                 </div>
+                {!loggedIn && (
+                    
+                    <Container>
+                        <div style={{ textAlign: 'center', marginTop: '40px' }}>
+                            <h1 style={{ color: 'white', fontSize: '32px' }}>Descubra os Artistas Mais Quentes!</h1>
+                        </div>
+                        <Row className="mx-2 row-cols-4">
+                            {artistResults.map(artist => (
+                                <ArtistCardNoContract key={artist.id} artist={artist} handleSelectArtist={handleSelectArtist} />
+                            ))}
+                        </Row>
+    
+                    </Container>
+    
+                )}
                 <Container>
                     {loggedIn && (
                         <>
@@ -260,7 +273,9 @@ function App() {
                         </Modal.Footer>
                     </Modal>
                 </Container>
-                <svg className="hero-waves" xmlns="http://www.w3.org/2000/svg" viewBox="0 24 150 28" preserveAspectRatio="none">
+            </section>
+            <footer id="footer" style={{ position: 'relative' }}>
+                <svg className="hero-waves" xmlns="http://www.w3.org/2000/svg" viewBox="0 24 150 28" preserveAspectRatio="none" style={{ position: 'absolute', bottom: '0', height: '50px', width: '100%' }}>
                     <defs>
                         <path id="wave-path" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
                     </defs>
@@ -274,8 +289,6 @@ function App() {
                         <use xlinkHref="#wave-path" x="50" y="9" fill="#fff" />
                     </g>
                 </svg>
-            </section>
-            <footer id="footer">
                 <div class="container">
                     <div class="copyright">
                     &copy; Copyright <strong><span id="ar">FelipeEliasSoares</span></strong>. All Rights Reserved

@@ -71,17 +71,32 @@
 }
 
 
+.btn-get-started {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  letter-spacing: 1px;
+  display: inline-block;
+  padding: 10px 30px;
+  border-radius: 40px;
+  transition: 0.5s;
+  color: #fff;
+  background: #ff4500;
+  border: none; 
+  outline: none; 
+}
 
 .btn-get-started:hover {
-    background-color: #FF6347; /* Altera a cor de fundo ao passar o mouse */
-    color: #FFFFFF; /* Altera a cor do texto ao passar o mouse */
+  background: #be1a1a; 
+  color: #fff; 
 }
 
 
+
+
+
   
-  #hero .btn-get-started:hover {
-    background: #1d5bb3;
-  }
+
   
   #hero .animated {
     animation: up-down 2s ease-in-out infinite alternate-reverse both;

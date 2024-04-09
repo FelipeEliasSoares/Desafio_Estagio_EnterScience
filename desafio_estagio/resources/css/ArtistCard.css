@@ -6,3 +6,17 @@
 .artist-card.visible {
     opacity: 1;
 }
+
+.glow-text {
+    color: red;
+    animation: glow 1.2s ease-in-out infinite alternate; /* Define a animação de brilho */
+}
+
+@keyframes glow {
+    from {
+        text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000, 0 0 30px #ff0000; /* Define a sombra inicial */
+    }
+    to {
+        text-shadow: 0 0 20px #ff0000, 0 0 30px #ff0000, 0 0 40px #ff0000; /* Define a sombra final */
+    }
+}
