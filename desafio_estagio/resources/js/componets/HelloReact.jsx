@@ -7,7 +7,9 @@ import SearchForm from './SearchForm';
 import ArtistCard from './ArtistCard';
 import ContractModal from './ContractModal';
 import CustomNavbar from './Navbar';
+import HeroSection from './HeroSection';
 import '/opt/lampp/htdocs/Desafio_Estagio/desafio_estagio/resources/css/app.css';
+
 
 const CLIENT_ID = "20c085fee3c645afb8047ecd27833b1e"
 const CLIENT_SECRET = "a259f3b59fe44e5392682519c1826616"
@@ -153,10 +155,8 @@ function App() {
         setLoggedIn(false);
     }
 
-
-
     return (
-        <Container>
+        <Container fluid>
             {/* Barra de navegação personalizada */}
             <CustomNavbar 
                 handleLogin={() => setLoginModalShow(true)} 
@@ -164,97 +164,130 @@ function App() {
                 handleLogout={handleLogout} 
                 showMyClientsButton={loggedIn}
                 handleMyClientsClick={() => setShowModal(true)}
-            />
-    
-            <div className="banner">
-                <h1>Seja bem-vindo à nossa empresa</h1>
-            </div>
-            
+            /> 
             {/* Conteúdo */}
-            {loggedIn && (
-                <>
-                    
-                    <h1>Contratação de Artistas</h1>
-                    <SearchForm setSearchQuery={setSearchQuery} search={search} />
-                    {/* Exibir o Spinner enquanto os artistas estão sendo carregados */}
-                    {loading ? (
-                        <div className="d-flex justify-content-center mt-5">
-                            <Spinner animation="border" role="status">
-                                <span className="sr-only"></span>
-                            </Spinner>
+            <section id="hero" style={{ width: '100%', backgroundColor: 'black', position: 'relative', padding: '120px 0 0 0' }}>
+                
+                <div className="container">
+                    <div className="row justify-content-between mb-4">
+                        <div className="col-lg-7 pt-5 pt-lg-0 order-2 order-lg-1 d-flex align-items-center">
+                            <div data-aos="zoom-out">
+                                <h1 style={{ margin: '0 0 20px 0', fontSize: '48px', fontWeight: 700, lineHeight: '56px', color: '#ffffff' }}>Contrate um Cantor</h1>
+                                <h2 style={{ color: 'rgba(255, 255, 255, 0.8)', marginBottom: '40px', fontSize: '24px' }}>Encante seu público com músicas cativantes e performances emocionantes.</h2>
+                                <div className="text-center text-lg-start">
+                                    <a href="#" className="btn-get-started scrollto" style={{ fontFamily: '"Montserrat", sans-serif', fontWeight: 500, fontSize: '16px', letterSpacing: '1px', display: 'inline-block', padding: '10px 30px', borderRadius: '40px', transition: '0.5s', color: '#fff', background: '#ff4500' }}>Contrate Agora!</a>
+                                </div>
+                            </div>
                         </div>
-                    ) : (
-                        <Row className="mx-2 row-cols-4">
-                            {artistResults.map(artist => (
-                                <ArtistCard key={artist.id} artist={artist} handleSelectArtist={handleSelectArtist} />
-                            ))}
-                        </Row>
+                        <div className="col-lg-4 order-1 order-lg-2 hero-img " data-aos="zoom-out" data-aos-delay="300">
+                            <img src="https://img.freepik.com/fotos-gratis/cantor-negro-apaixonado-se-apresentando-contra-o-vermelho_1258-26348.jpg?w=1380&t=st=1712622504~exp=1712623104~hmac=bc9af2074f2c9104203cb0cca3801bf86c0315836640d42a1731cb01237a528c" className="img-fluid mb-5" alt="" style={{ marginRight: '-30px',borderRadius:'20px',}} />
+                        </div>
+                    </div>
+                </div>
+                <Container>
+                    {loggedIn && (
+                        <>
+                            <SearchForm setSearchQuery={setSearchQuery} search={search} />
+                            {/* Exibir o Spinner enquanto os artistas estão sendo carregados */}
+                            {loading ? (
+                                <div className="d-flex justify-content-center mt-5">
+                                    <Spinner animation="border" role="status">
+                                        <span className="sr-only"></span>
+                                    </Spinner>
+                                </div>
+                            ) : (
+                                <Row className="mx-2 row-cols-4">
+                                    {artistResults.map(artist => (
+                                        <ArtistCard key={artist.id} artist={artist} handleSelectArtist={handleSelectArtist} />
+                                    ))}
+                                </Row>
+                            )}
+                            <ContractModal
+                                showModal={showModal}
+                                setShowModal={setShowModal}
+                                selectedArtist={selectedArtist}
+                                formData={formData}
+                                handleInputChange={handleInputChange}
+                                handleSubmit={handleSubmit}
+                            />
+                        </>
                     )}
-                    <ContractModal
-                        showModal={showModal}
-                        setShowModal={setShowModal}
-                        selectedArtist={selectedArtist}
-                        formData={formData}
-                        handleInputChange={handleInputChange}
-                        handleSubmit={handleSubmit}
-                    />
-    
-                </>
-            )}
-    
-            <Modal show={addSuccessMessage !== ''} onHide={() => setAddSuccessMessage('')}>
-                <Modal.Header closeButton>
-                    <Modal.Title>{addSuccessMessage.includes('sucesso') ? 'Sucesso!' : 'Falha!'}</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <p>{addSuccessMessage}</p>
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="primary" onClick={() => setAddSuccessMessage('')}>Fechar</Button>
-                </Modal.Footer>
-            </Modal>
-    
-            {/* Modal de login */}
-            <Modal show={loginModalShow} onHide={() => setLoginModalShow(false)}>
-                <Modal.Header closeButton>
-                    <Modal.Title>Login</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <Form>
-                        <Form.Group controlId="username">
-                            <Form.Label>Username</Form.Label>
-                            <Form.Control type="text" placeholder="Enter username" onChange={e => setUsername(e.target.value)} />
-                        </Form.Group>
-                        <Form.Group controlId="password">
-                            <Form.Label>Password</Form.Label>
-                            <Form.Control type="password" placeholder="Password" onChange={e => setPassword(e.target.value)} />
-                        </Form.Group>
-                    </Form>
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="danger" onClick={() => setLoginModalShow(false)}>Close</Button>
-                    <Button variant="success" onClick={() => handleLogin(username, password)}>Login</Button>
-                </Modal.Footer>
-            </Modal>
-    
-            {/* Modal de sucesso ou falha no login */}
-            <Modal show={successMessage !== '' && successMessage !== 'Login bem-sucedido!'} onHide={() => setSuccessMessage('')}>
-                <Modal.Header closeButton>
-                    <Modal.Title>Falha ao fazer login!</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    {successMessage !== 'Login bem-sucedido!' && (
-                        <p>Ocorreu um erro ao fazer login. Por favor, verifique suas credenciais e tente novamente.</p>
-                    )}
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="danger" onClick={() => setSuccessMessage('')}>Fechar</Button>
-                </Modal.Footer>
-            </Modal>
-    
-            
+                    <Modal show={addSuccessMessage !== ''} onHide={() => setAddSuccessMessage('')}>
+                        <Modal.Header closeButton>
+                            <Modal.Title>{addSuccessMessage.includes('sucesso') ? 'Sucesso!' : 'Falha!'}</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            <p>{addSuccessMessage}</p>
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <Button variant="primary" onClick={() => setAddSuccessMessage('')}>Fechar</Button>
+                        </Modal.Footer>
+                    </Modal>
+                    {/* Modal de login */}
+                    <Modal show={loginModalShow} onHide={() => setLoginModalShow(false)}>
+                        <Modal.Header closeButton>
+                            <Modal.Title>Login</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            <Form>
+                                <Form.Group controlId="username">
+                                    <Form.Label>Username</Form.Label>
+                                    <Form.Control type="text" placeholder="Enter username" onChange={e => setUsername(e.target.value)} />
+                                </Form.Group>
+                                <Form.Group controlId="password">
+                                    <Form.Label>Password</Form.Label>
+                                    <Form.Control type="password" placeholder="Password" onChange={e => setPassword(e.target.value)} />
+                                </Form.Group>
+                            </Form>
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <Button variant="danger" onClick={() => setLoginModalShow(false)}>Close</Button>
+                            <Button variant="success" onClick={() => handleLogin(username, password)}>Login</Button>
+                        </Modal.Footer>
+                    </Modal>
+                    {/* Modal de sucesso ou falha no login */}
+                    <Modal show={successMessage !== '' && successMessage !== 'Login bem-sucedido!'} onHide={() => setSuccessMessage('')}>
+                        <Modal.Header closeButton>
+                            <Modal.Title>Falha ao fazer login!</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            {successMessage !== 'Login bem-sucedido!' && (
+                                <p>Ocorreu um erro ao fazer login. Por favor, verifique suas credenciais e tente novamente.</p>
+                            )}
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <Button variant="danger" onClick={() => setSuccessMessage('')}>Fechar</Button>
+                        </Modal.Footer>
+                    </Modal>
+                </Container>
+                <svg className="hero-waves" xmlns="http://www.w3.org/2000/svg" viewBox="0 24 150 28" preserveAspectRatio="none">
+                    <defs>
+                        <path id="wave-path" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+                    </defs>
+                    <g className="wave1">
+                        <use xlinkHref="#wave-path" x="50" y="3" fill="rgba(255,255,255, .1)" />
+                    </g>
+                    <g className="wave2">
+                        <use xlinkHref="#wave-path" x="50" y="0" fill="rgba(255,255,255, .2)" />
+                    </g>
+                    <g className="wave3">
+                        <use xlinkHref="#wave-path" x="50" y="9" fill="#fff" />
+                    </g>
+                </svg>
+            </section>
+            <footer id="footer">
+                <div class="container">
+                    <div class="copyright">
+                    &copy; Copyright <strong><span id="ar">FelipeEliasSoares</span></strong>. All Rights Reserved
+                    </div>
+                    <div class="credits">
+                    Designed by <a href="https://github.com/FelipeEliasSoares/Trabalho_Desenvolvimento_Web_2" id="ar">FelipeEliasSoares</a>
+                    </div>
+                </div>
+            </footer>
         </Container>
     );
+    
     
 }
     

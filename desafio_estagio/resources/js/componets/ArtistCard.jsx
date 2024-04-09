@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Card, Button } from 'react-bootstrap';
+import { Card, Button, Container, Col } from 'react-bootstrap';
 import '/opt/lampp/htdocs/Desafio_Estagio/desafio_estagio/resources/css/ArtistCard.css';
 
 function ArtistCard({ artist, handleSelectArtist }) {
@@ -15,15 +15,15 @@ function ArtistCard({ artist, handleSelectArtist }) {
     }, []);
 
     return (
-        <div className={`artist-card ${isVisible ? 'visible' : ''}`}>
-            <Card key={artist.id} className="text-center">
-                {artist.image && <Card.Img variant="top" src={artist.image} />}
-                <Card.Body>
-                    <Card.Title>{artist.name}</Card.Title>
-                    <Button variant="primary" onClick={() => handleSelectArtist(artist)}>Selecionar</Button>
+        <Col xs={12} sm={6} md={4} lg={3} xl={3} className={`artist-card ${isVisible ? 'visible' : ''} mt-3`}>
+            <Card className="text-center" style={{ backgroundColor: 'black', boxShadow: '0 4px 8px 0 rgba(255, 255, 255, 0.2)' }}>
+                {artist.image && <Card.Img variant="top" src={artist.image} style={{ height: '200px', objectFit: 'cover' }} />}
+                <Card.Body style={{ color: 'white' }}>
+                    <Card.Title style={{ fontSize: '1.2rem' }}>{artist.name}</Card.Title>
+                    <Button variant="success" onClick={() => handleSelectArtist(artist)}>Selecionar</Button>
                 </Card.Body>
             </Card>
-        </div>
+        </Col>
     );
 }
 
