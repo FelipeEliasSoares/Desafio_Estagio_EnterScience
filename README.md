@@ -1,3 +1,5 @@
+markdown
+
 # Tutorial de Instalação - Desafio Estágio EnterScience
 
 Este guia fornecerá instruções passo a passo para configurar e executar o projeto Desafio Estágio EnterScience em seu ambiente local.
@@ -13,43 +15,67 @@ Antes de começar, verifique se você possui o npm e o composer instalados em se
 
 1. Clone o repositório Desafio Estágio EnterScience em sua máquina local:
 
-   ```bash
-   git clone https://github.com/FelipeEliasSoares/Desafio_Estagio_EnterScience.git
+git clone https://github.com/FelipeEliasSoares/Desafio_Estagio_EnterScience.git
 
-    Navegue até o diretório do repositório clonado:
+arduino
 
-    bash
+
+2. Navegue até o diretório do repositório clonado:
 
 cd Desafio_Estagio_EnterScience
 
-Dentro do diretório do repositório, instale as dependências PHP e JavaScript usando o Composer e o npm:
+csharp
 
-bash
+
+3. Dentro do diretório do repositório, instale as dependências PHP e JavaScript usando o Composer e o npm:
 
 composer install
 npm install
 
-Navegue até o diretório desafio_estagio:
+markdown
 
-bash
+
+4. Navegue até o diretório `desafio_estagio`:
 
 cd desafio_estagio
 
-Dentro do diretório desafio_estagio, instale novamente as dependências PHP e JavaScript:
+javascript
 
-bash
+
+5. Dentro do diretório `desafio_estagio`, instale novamente as dependências PHP e JavaScript:
 
 composer install
 npm install
 
-Execute o servidor PHP usando o Artisan:
+markdown
 
-bash
+
+6. Execute o servidor PHP usando o Artisan:
 
 php artisan serve
 
-Em outro terminal, execute o comando npm para compilar os assets:
+lua
 
-bash
+
+7. Em outro terminal, execute o comando npm para compilar os assets:
 
 npm run dev
+
+css
+
+
+## Acessando a Aplicação
+
+Após a conclusão dos passos acima, você pode acessar a aplicação em seu navegador da web visitando o endereço:
+
+http://localhost:8000
+
+markdown
+
+
+## Fazendo Login
+
+Para fazer login na aplicação, utilize as seguintes credenciais:
+
+- **Email:** user@example.com
+- **Senha:** password123
