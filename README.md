@@ -1,47 +1,55 @@
-Tutorial de Instalação
-Pré-requisitos
+# Tutorial de Instalação - Desafio Estágio EnterScience
 
-Antes de começar, certifique-se de ter as seguintes ferramentas instaladas em seu computador:
+Este guia fornecerá instruções passo a passo para configurar e executar o projeto Desafio Estágio EnterScience em seu ambiente local.
 
-    npm: Gerenciador de Pacotes do Node.js
-    composer: Gerenciador de Dependências para PHP
+## Pré-requisitos
 
-Passos de Instalação
+Antes de começar, verifique se você possui o npm e o composer instalados em seu computador.
 
-Siga estas etapas para configurar o projeto:
+- [npm](https://www.npmjs.com/get-npm)
+- [Composer](https://getcomposer.org/download/)
 
-    Instale o npm:
-        Se você ainda não tem o npm instalado, faça o download e instale-o a partir do site oficial do npm.
-    Instale o composer:
-        Se você ainda não tem o composer instalado, faça o download e instale-o a partir do site oficial do composer.
-    Clone o repositório:
-        Execute o seguinte comando no terminal para clonar o repositório:
+## Passo a Passo
 
-        git clone https://github.com/FelipeEliasSoares/Desafio_Estagio_EnterScience.git
+1. Clone o repositório Desafio Estágio EnterScience em sua máquina local:
 
-    Acesse a pasta do repositório:
-        Navegue até o diretório do projeto:
+   ```bash
+   git clone https://github.com/FelipeEliasSoares/Desafio_Estagio_EnterScience.git
 
-        cd Desafio_Estagio_EnterScience
+    Navegue até o diretório do repositório clonado:
 
-    Instale as dependências:
-        Execute os seguintes comandos:
+    bash
 
-        composer install
-        npm install
+cd Desafio_Estagio_EnterScience
 
-    Configure o ambiente:
-        Crie um arquivo .env com as configurações necessárias para o seu projeto.
-    Execute o projeto:
-        Inicie o servidor local com o seguinte comando:
+Dentro do diretório do repositório, instale as dependências PHP e JavaScript usando o Composer e o npm:
 
-        php artisan serve
+bash
 
-        Em outro terminal, execute:
+composer install
+npm install
 
-        npm run dev
+Navegue até o diretório desafio_estagio:
 
-Para fazer login, utilize as seguintes credenciais:
+bash
 
-    E-mail: user@example.com
-    Senha: password123
+cd desafio_estagio
+
+Dentro do diretório desafio_estagio, instale novamente as dependências PHP e JavaScript:
+
+bash
+
+composer install
+npm install
+
+Execute o servidor PHP usando o Artisan:
+
+bash
+
+php artisan serve
+
+Em outro terminal, execute o comando npm para compilar os assets:
+
+bash
+
+npm run dev
