@@ -3,14 +3,14 @@
 use App\Http\Controllers\ArtistController;
 
 use App\Http\Controllers\AuthController;
-use Illuminate\Http\Request;
+
 use Illuminate\Support\Facades\Route;
 
 
-
+//Authentication route
 Route::post('/login', [AuthController::class, 'login']);
 
-
+//Route of my customers
 Route::get('/my-clients', [ArtistController::class, 'getMyClients']);
 
 
@@ -22,10 +22,10 @@ Route::get('/', function () {
 
 Route::post('/hire-artist', [ArtistController::class, 'hireArtist']);
 
-// Rota para atualizar um cliente
+// Route to update a client
 Route::put('/clients/{id}', [ArtistController::class, 'updateClient']);
 
-// Rota para excluir um cliente
+// Route to delete a customer
 Route::get('/clients/{id}/delete', [ArtistController::class, 'deleteClient']);
 
 

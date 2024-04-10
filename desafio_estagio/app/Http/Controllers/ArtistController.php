@@ -7,28 +7,28 @@ use Illuminate\Support\Facades\Storage;
 
 class ArtistController extends Controller
 {
-    // Caminho do arquivo JSON para armazenar os dados dos clientes
+    // JSON file path to store customer data
     private $filePath = 'clients.json';
 
-    // Função para lidar com a solicitação GET em http://localhost:8000/my-clients
+    // Function to handle GET request at http://localhost:8000/my-clients
     public function getMyClients(Request $request)
     {
-        // Verifica se o arquivo JSON existe
+        // Checks if the JSON file exists
         if (Storage::exists($this->filePath)) {
-            // Recupere os dados dos clientes do arquivo JSON
+            // Retrieve customer data from JSON file
             $clients = json_decode(Storage::get($this->filePath), true);
         } else {
             $clients = [];
         }
 
-        // Retorne os dados dos clientes como JSON
+        // Return customer data as JSON
         return response()->json($clients);
     }
 
-    // Função para contratar um artista (mantenha essa função)
+    // Function to hire an artist (keep this function)
     public function hireArtist(Request $request)
     {
-        // Valide os dados do formulário
+        // Validates form data
         $validatedData = $request->validate([
             'name' => 'string',
             'artist' => 'string',
@@ -37,10 +37,10 @@ class ArtistController extends Controller
             'address' => 'string',
         ]);
 
-        // Gerar um ID único
+        // Generate a unique ID
         $validatedData['id'] = uniqid();
 
-        // Salvar os dados dos clientes no arquivo JSON
+        // Save customer data to JSON file
         $clients = [];
         if (Storage::exists($this->filePath)) {
             $clients = json_decode(Storage::get($this->filePath), true);
@@ -49,7 +49,7 @@ class ArtistController extends Controller
         $clients[] = $validatedData;
         Storage::put($this->filePath, json_encode($clients));
 
-        // Retorna a mensagem de sucesso
+        // Returns success message
         return response()->json([
             'success' => true,
             'message' => 'Artista contratado com sucesso!',
@@ -63,12 +63,12 @@ class ArtistController extends Controller
             $clients = json_decode(Storage::get($this->filePath), true);
         }
     
-        // Percorre os clientes e remove o cliente com o ID fornecido
+        // Cycles through the clients and removes the client with the given ID
         $filteredClients = array_filter($clients, function ($client) use ($id) {
             return isset($client['id']) && $client['id'] !== $id;
         });
     
-        // Atualiza o arquivo JSON com os clientes filtrados
+        // Update the JSON file with filtered customers
         Storage::put($this->filePath, json_encode(array_values($filteredClients)));
     
         return response()->json([
@@ -80,7 +80,7 @@ class ArtistController extends Controller
     
     
 
-    // Função para atualizar os dados de um cliente pelo seu ID
+    // Function to update a customer's data using their ID
     public function updateClient(Request $request)
     {
         $idToUpdate = $request->input('id');
@@ -91,14 +91,14 @@ class ArtistController extends Controller
             $clients = json_decode(Storage::get($this->filePath), true);
         }
 
-        // Percorre os clientes e atualiza os dados do cliente com o ID fornecido
+        // Cycle through customers and update customer data with the given ID
         foreach ($clients as &$client) {
             if ($client['id'] === $idToUpdate) {
                 $client = array_merge($client, $updatedData);
             }
         }
 
-        // Atualiza o arquivo JSON com os clientes atualizados
+        // Update the JSON file with the updated clients
         Storage::put($this->filePath, json_encode($clients));
 
         return response()->json([

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Modal, Table, Form } from 'react-bootstrap';
 import axios from 'axios';
+import '../../css/app.css';
 
 function MyClientsButton() {
     const [showModal, setShowModal] = useState(false);
@@ -18,7 +19,7 @@ function MyClientsButton() {
         address: ''
     });
 
-    // Função para lidar com o clique no botão "Meus Contratantes"
+    // Function to handle clicking on the "My Contractors" button
     const handleMyClientsClick = () => {
         setLoading(true);
         axios.get('http://localhost:8000/my-clients')
@@ -37,9 +38,9 @@ function MyClientsButton() {
         console.log('Removendo cliente com ID:', id);
         axios.get(`http://localhost:8000/clients/${id}/delete`)
                 .then(response => {
-                    // Atualize a lista de clientes após a remoção bem-sucedida
+                    // Update customer list after successful removal
                     handleMyClientsClick();
-                    // Se o cliente removido estava selecionado, deselecione-o
+                    // If the removed client was selected, deselect it
                     if (selectedRowIndex !== null && clients[selectedRowIndex].id === parseInt(id)) {
                         setSelectedRowIndex(null);
                     }
@@ -50,7 +51,7 @@ function MyClientsButton() {
     };
 
     const handleEditClient = (id) => {
-        // Implemente a lógica para preencher o formulário com os dados do cliente selecionado
+        // logic to fill the form with the selected customer data
         const selectedClient = clients.find(client => client.id === id);
         setFormData(selectedClient);
         setShowEditModal(true);
@@ -67,12 +68,12 @@ function MyClientsButton() {
     const handleFormSubmit = (e) => {
         e.preventDefault();
         console.log('Dados do formulário:', formData);
-        // Implemente a lógica para enviar os dados atualizados do cliente para o back-end
+        // send the updated customer data to the backend
         axios.put(`http://localhost:8000/clients/${formData.id}`, formData)
             .then(response => {
-                // Atualize a lista de clientes após a edição bem-sucedida
+                // Updates customer list after successful editing
                 handleMyClientsClick();
-                // Feche o modal de edição
+                // Close the edit modal
                 setShowEditModal(false);
             })
             .catch(error => {
@@ -81,92 +82,80 @@ function MyClientsButton() {
     };
     
 
-    // Função para lidar com o clique em uma linha da tabela (seleção)
+    // Function to handle clicking on a table row (selection)
     const handleRowClick = (index) => {
         setSelectedRowIndex(index === selectedRowIndex ? null : index);
     };
 
     return (
         <>
-            <Button variant="primary" onClick={handleMyClientsClick} >
+            <Button variant="light" onClick={handleMyClientsClick} className='mr-5'>
                 Meus Contratantes
             </Button>
 
-            <Modal show={showModal} onHide={() => setShowModal(false)}>
-                <Modal.Header closeButton>
+            <Modal show={showModal} onHide={() => setShowModal(false)} dialogClassName="modal-xl">
+                <Modal.Header closeButton style={{ backgroundColor: '#343a40', color: 'white' }}>
                     <Modal.Title>Meus Contratantes</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>
+                <Modal.Body style={{ backgroundColor: '#f8f9fa' }}>
                     {loading ? (
                         <p>Carregando...</p>
                     ) : error ? (
                         <p>Ocorreu um erro: {error}</p>
                     ) : (
-                        <Table striped bordered hover>
-                            <thead>
-                                <tr>
-                                    <th>Nome</th>
-                                    <th>Artista</th>
-                                    <th>Preço</th>
-                                    <th>Data do Evento</th>
-                                    <th>Endereço</th>
-                                    <th>Ações</th> {/* Coluna para os botões de ação */}
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {clients.map((client, index) => (
-                                    <tr key={client.id} onClick={() => handleRowClick(index)} className={selectedRowIndex === index ? 'table-primary' : ''}>
-                                        <td>{client.name}</td>
-                                        <td>{client.artist}</td>
-                                        <td>{client.fee}</td>
-                                        <td>{client.eventDate}</td>
-                                        <td>{client.address}</td>
-                                        <td>
-                                            <Button variant="danger" onClick={() => handleRemoveClient(client.id)}>Remover</Button>
-                                            <Button variant="primary" onClick={() => handleEditClient(client.id)}>Editar</Button>
-                                        </td>
+                        <div className="table-responsive">
+                            <Table striped bordered hover className="custom-table">
+                                <thead>
+                                    <tr>
+                                        <th>Nome</th>
+                                        <th>Artista</th>
+                                        <th>Preço</th>
+                                        <th>Data do Evento</th>
+                                        <th>Endereço</th>
+                                        <th>Ações</th>
                                     </tr>
-                                ))}
-                            </tbody>
-                        </Table>
+                                </thead>
+                                <tbody>
+                                    {clients.map((client, index) => (
+                                        <tr key={client.id} onClick={() => handleRowClick(index)} className={selectedRowIndex === index ? 'table-primary' : ''}>
+                                            <td>{client.name}</td>
+                                            <td>{client.artist}</td>
+                                            <td>{client.fee}</td>
+                                            <td>{client.eventDate}</td>
+                                            <td>{client.address}</td>
+                                            <td>
+                                                <div className="d-flex justify-content-around">
+                                                    <Button variant="danger" onClick={() => handleRemoveClient(client.id)}>Remover</Button>
+                                                    <Button variant="primary" onClick={() => handleEditClient(client.id)}>Editar</Button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </Table>
+                        </div>
                     )}
                 </Modal.Body>
-                <Modal.Footer>
+                <Modal.Footer style={{ backgroundColor: '#f8f9fa' }}>
                     <Button variant="secondary" onClick={() => setShowModal(false)}>Fechar</Button>
                 </Modal.Footer>
             </Modal>
 
-            {/* Modal de edição */}
-            <Modal show={showEditModal} onHide={() => setShowEditModal(false)}>
-                <Modal.Header closeButton>
+            <Modal show={showEditModal} onHide={() => setShowEditModal(false)} dialogClassName="modal-lg">
+                <Modal.Header closeButton style={{ backgroundColor: '#343a40', color: 'white' }}>
                     <Modal.Title>Editar Cliente</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>
+                <Modal.Body style={{ backgroundColor: '#f8f9fa' }}>
                     <Form onSubmit={handleFormSubmit}>
                         <Form.Group controlId="formName">
                             <Form.Label>Nome</Form.Label>
                             <Form.Control type="text" name="name" value={formData.name} onChange={handleFormChange} />
                         </Form.Group>
-                        <Form.Group controlId="formArtist">
-                            <Form.Label>Artista</Form.Label>
-                            <Form.Control type="text" name="artist" value={formData.artist} onChange={handleFormChange} />
-                        </Form.Group>
-                        <Form.Group controlId="formFee">
-                            <Form.Label>Preço</Form.Label>
-                            <Form.Control type="text" name="fee" value={formData.fee} onChange={handleFormChange} />
-                        </Form.Group>
-                        <Form.Group controlId="formEventDate">
-                            <Form.Label>Data do Evento</Form.Label>
-                            <Form.Control type="text" name="eventDate" value={formData.eventDate} onChange={handleFormChange} />
-                        </Form.Group>
-                        <Form.Group controlId="formAddress">
-                            <Form.Label>Endereço</Form.Label>
-                            <Form.Control type="text" name="address" value={formData.address} onChange={handleFormChange} />
-                        </Form.Group>
+                        {/* Adicione mais campos de formulário conforme necessário */}
                         <Button variant="primary" type="submit">Salvar Alterações</Button>
                     </Form>
                 </Modal.Body>
-                <Modal.Footer>
+                <Modal.Footer style={{ backgroundColor: '#f8f9fa' }}>
                     <Button variant="secondary" onClick={() => setShowEditModal(false)}>Fechar</Button>
                 </Modal.Footer>
             </Modal>
