@@ -1,0 +1,5 @@
+{
+    "require": {
+        "aerni/laravel-spotify": "^2.2"
+    }
+}

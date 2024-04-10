@@ -7,7 +7,11 @@ function ArtistCard({ artist, handleSelectArtist }) {
     useEffect(() => {
         
         const timeout = setTimeout(() => {
+            setIsVisible(true);
         }, 100);
+
+        return () => clearTimeout(timeout);
+    }, []);
 
     return (
         artist.image && (
