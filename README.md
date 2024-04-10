@@ -32,20 +32,20 @@ Antes de começar, verifique se você possui o npm e o composer instalados em se
 4. Navegue até o diretório `desafio_estagio`:
 ```bash
 cd desafio_estagio
-
+```
 
 5. Dentro do diretório `desafio_estagio`, instale novamente as dependências PHP e JavaScript:
-```bash
+```
   composer install
   npm install
 ```
 
-6. Execute o servidor PHP usando o Artisan:
+6. Execute o servidor PHP usando o Artisan dentro de `desafio_estagio` :
 ```
   php artisan serve
 ```
 
-7. Em outro terminal, execute o comando npm para compilar os assets:
+7. Em outro terminal, execute o comando npm para compilar os assets dentro de`desafio_estagio`:
 ```
   npm run dev
 ```
