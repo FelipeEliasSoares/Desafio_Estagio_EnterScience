@@ -13,45 +13,47 @@ Antes de começar, verifique se você possui o npm e o composer instalados em se
 
 1. Clone o repositório Desafio Estágio EnterScience em sua máquina local:
 
-  git clone https://github.com/FelipeEliasSoares/Desafio_Estagio_EnterScience.git
+ ```bash
+git clone https://github.com/FelipeEliasSoares/Desafio_Estagio_EnterScience.git
+
 
 
 2. Navegue até o diretório do repositório clonado:
-
+```bash
   cd Desafio_Estagio_EnterScience
 
 
 3. Dentro do diretório do repositório, instale as dependências PHP e JavaScript usando o Composer e o npm:
-
+```bash
   composer install
   npm install
 
 
 4. Navegue até o diretório `desafio_estagio`:
-
+```bash
 cd desafio_estagio
 
 
 5. Dentro do diretório `desafio_estagio`, instale novamente as dependências PHP e JavaScript:
-
+```bash
   composer install
   npm install
 
 
 6. Execute o servidor PHP usando o Artisan:
-
+```bash
   php artisan serve
 
 
 7. Em outro terminal, execute o comando npm para compilar os assets:
-
+```bash
   npm run dev
 
 
 ## Acessando a Aplicação
 
 Após a conclusão dos passos acima, você pode acessar a aplicação em seu navegador da web visitando o endereço:
-
+```bash
   http://localhost:8000
 
 
