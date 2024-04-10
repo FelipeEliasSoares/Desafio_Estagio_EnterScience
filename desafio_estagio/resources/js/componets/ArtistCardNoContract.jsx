@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Card, Button, Container, Col } from 'react-bootstrap';
-import '/opt/lampp/htdocs/Desafio_Estagio/desafio_estagio/resources/css/ArtistCard.css';
-
+import '../../css/ArtistCard.css';
 function ArtistCardNoContract({ artist, handleSelectArtist }) {
     const [isVisible, setIsVisible] = useState(false);
 
     useEffect(() => {
-        // Adiciona uma pequena pausa para criar o efeito de surgimento
+        
         const timeout = setTimeout(() => {
             setIsVisible(true);
         }, 100);

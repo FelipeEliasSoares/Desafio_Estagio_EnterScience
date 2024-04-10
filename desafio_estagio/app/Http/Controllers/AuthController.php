@@ -9,15 +9,15 @@ class AuthController extends Controller
 {
     public function login(Request $request)
     {
-        // Credenciais fixas para login
+        // Fixed credentials for login
         $fixedCredentials = [
             'email' => 'user@example.com',
             'password' => 'password123'
         ];
 
-        // Verifica se as credenciais fornecidas correspondem às credenciais fixas
+        // Checks if the provided credentials match the fixed credentials
         if ($request->input('email') === $fixedCredentials['email'] && $request->input('password') === $fixedCredentials['password']) {
-            // Autenticação bem-sucedida
+            // Authentication successful
             return response()->json(['message' => 'Login bem-sucedido'], 200);
         } else {
             // Credenciais inválidas

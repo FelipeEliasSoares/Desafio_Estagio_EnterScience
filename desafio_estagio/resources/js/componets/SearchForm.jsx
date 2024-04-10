@@ -3,15 +3,15 @@ import { InputGroup, FormControl, Button } from 'react-bootstrap';
 
 function SearchForm({ setSearchQuery, search }) {
     const handleSearch = () => {
-        // Chama a função de pesquisa passada como propriedade
+        // Calls the search function passed as a property
         search();
     };
 
     const handleKeyDown = (event) => {
-        // Verifica se a tecla pressionada é a tecla Enter (código 13)
+        // Checks if the key pressed is the Enter key 
         if (event.key === 'Enter') {
-            // Chama a função de pesquisa ao pressionar Enter
-            search();
+        // Calls the search function passed as a property
+        search();
         }
     };
 
@@ -21,7 +21,7 @@ function SearchForm({ setSearchQuery, search }) {
                 placeholder="Buscar artistas"
                 type='input'
                 onChange={event => setSearchQuery(event.target.value)}
-                onKeyDown={handleKeyDown} // Adiciona o evento onKeyDown
+                onKeyDown={handleKeyDown}
             />
             <Button onClick={handleSearch} variant="success"> Buscar</Button>
         </InputGroup>

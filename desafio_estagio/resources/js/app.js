@@ -6,4 +6,4 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.bundle.min.js'
 import 'react-bootstrap'
 
-import './componets/HelloReact'
+import './componets/Index.jsx'

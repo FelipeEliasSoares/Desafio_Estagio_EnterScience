@@ -7,17 +7,17 @@ function CustomNavbar({ handleLogin, loggedIn, handleLogout, showMyClientsButton
 
     useEffect(() => {
         const handleResize = () => {
-            // Verifica se o tamanho da tela é menor que 768 pixels (tipicamente para dispositivos móveis)
+            // Checks if the screen size is smaller than 768 pixels (typically for mobile devices
             setIsMobile(window.innerWidth < 768);
         };
 
-        // Adiciona um listener para o evento resize
+        // Add a listener for the resize event
         window.addEventListener('resize', handleResize);
 
-        // Chamada inicial para configurar o estado de isMobile
+        // Initial call to configure isMobile status
         handleResize();
 
-        // Remove o listener do evento resize ao desmontar o componente
+        // Remove the resize event listener when unmounting the component
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 

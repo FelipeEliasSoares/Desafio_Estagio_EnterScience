@@ -1,10 +1,9 @@
 import React from 'react';
 import { Modal, Form, Button } from 'react-bootstrap';
-import '/opt/lampp/htdocs/Desafio_Estagio/desafio_estagio/resources/css/app.css';
-
+import '../../css/app.css';
 
 function ContractModal({ showModal, setShowModal, selectedArtist, formData, handleInputChange, handleSubmit }) {
-    // Verificar se selectedArtist é nulo antes de renderizar o modal
+    
     if (!selectedArtist) {
         return null;
     }
@@ -35,7 +34,7 @@ function ContractModal({ showModal, setShowModal, selectedArtist, formData, hand
                         <Form.Label>Endereço</Form.Label>
                         <Form.Control type="text" placeholder="Endereço do evento" name="address" value={formData.address} onChange={handleInputChange} required />
                     </Form.Group>
-                    <div className="d-flex justify-content-center"> {/* Adicione classe d-flex justify-content-center para centralizar o botão */}
+                    <div className="d-flex justify-content-center"> 
                         <Button variant="success" type="submit" className='mt-3'>
                             Enviar Contratação
                         </Button>

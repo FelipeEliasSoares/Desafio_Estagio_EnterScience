@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Modal, Table, Form } from 'react-bootstrap';
 import axios from 'axios';
-import '/opt/lampp/htdocs/Desafio_Estagio/desafio_estagio/resources/css/app.css';
+import '../../css/app.css';
 
 function MyClientsButton() {
     const [showModal, setShowModal] = useState(false);
@@ -19,7 +19,7 @@ function MyClientsButton() {
         address: ''
     });
 
-    // Função para lidar com o clique no botão "Meus Contratantes"
+    // Function to handle clicking on the "My Contractors" button
     const handleMyClientsClick = () => {
         setLoading(true);
         axios.get('http://localhost:8000/my-clients')
@@ -38,9 +38,9 @@ function MyClientsButton() {
         console.log('Removendo cliente com ID:', id);
         axios.get(`http://localhost:8000/clients/${id}/delete`)
                 .then(response => {
-                    // Atualize a lista de clientes após a remoção bem-sucedida
+                    // Update customer list after successful removal
                     handleMyClientsClick();
-                    // Se o cliente removido estava selecionado, deselecione-o
+                    // If the removed client was selected, deselect it
                     if (selectedRowIndex !== null && clients[selectedRowIndex].id === parseInt(id)) {
                         setSelectedRowIndex(null);
                     }
@@ -51,7 +51,7 @@ function MyClientsButton() {
     };
 
     const handleEditClient = (id) => {
-        // Implemente a lógica para preencher o formulário com os dados do cliente selecionado
+        // logic to fill the form with the selected customer data
         const selectedClient = clients.find(client => client.id === id);
         setFormData(selectedClient);
         setShowEditModal(true);
@@ -68,12 +68,12 @@ function MyClientsButton() {
     const handleFormSubmit = (e) => {
         e.preventDefault();
         console.log('Dados do formulário:', formData);
-        // Implemente a lógica para enviar os dados atualizados do cliente para o back-end
+        // send the updated customer data to the backend
         axios.put(`http://localhost:8000/clients/${formData.id}`, formData)
             .then(response => {
-                // Atualize a lista de clientes após a edição bem-sucedida
+                // Updates customer list after successful editing
                 handleMyClientsClick();
-                // Feche o modal de edição
+                // Close the edit modal
                 setShowEditModal(false);
             })
             .catch(error => {
@@ -82,7 +82,7 @@ function MyClientsButton() {
     };
     
 
-    // Função para lidar com o clique em uma linha da tabela (seleção)
+    // Function to handle clicking on a table row (selection)
     const handleRowClick = (index) => {
         setSelectedRowIndex(index === selectedRowIndex ? null : index);
     };
