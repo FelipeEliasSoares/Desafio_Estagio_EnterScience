@@ -1,12 +1,16 @@
-.artist-card {
-    opacity: 0;
-    transition: opacity 0.5s ease-in-out;
-}
+
 
 .artist-card.visible {
     opacity: 1;
 }
-
+.artist-card {
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .artist-card:hover {
+    transform: scale(1.1);
+  }
+  
 .glow-text {
     color: red;
     animation: glow 1.2s ease-in-out infinite alternate; /* Define a animação de brilho */

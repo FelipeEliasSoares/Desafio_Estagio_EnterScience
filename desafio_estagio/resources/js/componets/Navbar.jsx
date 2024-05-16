@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Navbar, Nav, Button } from 'react-bootstrap';
 import MyClientsButton from './MyClientsButton';
+import '../../css/CustomNavbar.css';
 
-function CustomNavbar({ handleLogin, loggedIn, handleLogout, showMyClientsButton, handleMyClientsClick }) {
+function CustomNavbar({ handleLogin, loggedIn, handleLogout, showMyClientsButton, }) {
     const [isMobile, setIsMobile] = useState(false);
 
     useEffect(() => {
@@ -23,7 +24,7 @@ function CustomNavbar({ handleLogin, loggedIn, handleLogout, showMyClientsButton
 
     return (
         <header id="header" className="d-flex align-items-center header-transparent" style={{ width: '100%', backgroundColor: 'rgba(18, 214, 61, 0.918)', position: 'relative', height: '60px' }}>
-            <div className="container d-flex align-items-center justify-content-between" style={{ paddingTop: '10px', paddingBottom: '10px' }}>
+            <div className="container d-flex align-items-center justify-content-between" style={{ paddingTop: '10px', paddingBottom: '10px' }} id='NavBar'>
 
                 <h4 style={{ margin: '0', marginBottom: isMobile ? '10px' : '0', fontSize: isMobile ? '1.5rem' : '2rem' }}>Contract-me</h4>
 

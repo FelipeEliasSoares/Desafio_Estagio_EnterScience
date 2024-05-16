@@ -1,0 +1,76 @@
+/* Footer.css */
+
+#footer {
+    position: relative;
+  }
+  
+  .hero-waves {
+    position: absolute;
+    bottom: 0;
+    height: 50px;
+    width: 100%;
+  }
+  
+  .wave1 use,
+  .wave2 use,
+  .wave3 use {
+    animation-duration: 10s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+  }
+  
+  .wave1 use {
+    animation-name: waveAnimation1;
+  }
+  
+  .wave2 use {
+    animation-name: waveAnimation2;
+  }
+  
+  .wave3 use {
+    animation-name: waveAnimation3;
+  }
+  
+  @keyframes waveAnimation1 {
+    from {
+      transform: translate(0, 10px);
+    }
+    to {
+      transform: translate(0, -10px);
+    }
+  }
+  
+  @keyframes waveAnimation2 {
+    from {
+      transform: translate(0, 5px);
+    }
+    to {
+      transform: translate(0, -15px);
+    }
+  }
+  
+  @keyframes waveAnimation3 {
+    from {
+      transform: translate(0, 15px);
+    }
+    to {
+      transform: translate(0, -5px);
+    }
+  }
+  
+  #footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .copyright {
+    margin-bottom: 10px;
+  }
+  
+  .credits {
+    font-size: 0.8rem;
+  }
+  
+  /* Customize as needed */
+  

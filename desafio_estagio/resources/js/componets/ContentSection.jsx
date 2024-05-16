@@ -3,6 +3,7 @@ import { Container, Row, Modal, Button, Form, Spinner } from 'react-bootstrap';
 import ArtistCard from './ArtistCard';
 import ContractModal from './ContractModal';
 import SearchForm from './SearchForm';
+import '../../css/ContentSection.css'; 
 
 const ContentSection = ({
     loggedIn,
@@ -26,7 +27,6 @@ const ContentSection = ({
     setSuccessMessage,
     handleLogin,
     handleSelectArtist,
-    searchQuery,
     setSearchQuery,
     search
 }) => {
@@ -35,9 +35,9 @@ const ContentSection = ({
             {loggedIn && (
                 <>
                     <SearchForm setSearchQuery={setSearchQuery} search={search} />
-                    {/* Exibir o Spinner enquanto os artistas estão sendo carregados */}
+                    {/* Spinner */}
                     {loading ? (
-                        <div className="d-flex justify-content-center mt-5">
+                        <div className="spinner-container">
                             <Spinner animation="border" role="status">
                                 <span className="sr-only"></span>
                             </Spinner>

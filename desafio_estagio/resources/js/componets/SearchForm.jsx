@@ -16,7 +16,7 @@ function SearchForm({ setSearchQuery, search }) {
     };
 
     return (
-        <InputGroup className="mb-3" size='lg'>
+        <InputGroup className="mb-4 mt-5" size='lg'>
             <FormControl
                 placeholder="Buscar artistas"
                 type='input'

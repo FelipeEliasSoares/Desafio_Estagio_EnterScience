@@ -8,8 +8,14 @@ import Footer from './Footer';
 import ContentSection from './ContentSection';
 import HeroSection from './HeroSection';
 import '../../css/app.css';
+
+
+//const CLIENT_ID = import.meta.env.SPOTIFY_CLIENT_ID;
+//const CLIENT_SECRET = import.meta.env.SPOTIFY_CLIENT_SECRET;
+
 const CLIENT_ID = "20c085fee3c645afb8047ecd27833b1e"
 const CLIENT_SECRET = "a259f3b59fe44e5392682519c1826616"
+
 
 function App() {
     const [searchQuery, setSearchQuery] = useState('');
@@ -19,6 +25,7 @@ function App() {
     const [formData, setFormData] = useState({
         name: '',
         artist: '',
+        img: '',
         fee: '',
         eventDate: '',
         address: ''
@@ -78,6 +85,7 @@ function App() {
         }
         try {
             const response = await fetch(`https://api.spotify.com/v1/search?q=${searchQuery}&type=artist`, artistParameters);
+            console.log('Resposta da solicitação:', response);
             if (!response.ok) {
                 throw new Error('Error ao buscar artistas');
             }
@@ -108,20 +116,28 @@ function App() {
         setFormData({ ...formData, [name]: value });
     }
 
-    // Handles form submission by sending the data to the backend API
+    
     async function handleSubmit(event) {
         event.preventDefault();
         try {
-            console.log('Dados enviados para hire-artist:', formData); 
-            const response = await axios.post('http://localhost:8000/hire-artist', formData);
+            // Atualize o formData com a imagem selecionada
+            const updatedFormData = { ...formData, img: selectedArtist.image };
+            console.log('Dados enviados para hire-artist:', updatedFormData); 
+            
+            const response = await axios.post('http://localhost:8000/hire-artist', updatedFormData);
             console.log(response.data);
             setAddSuccessMessage('Contratação adicionada com sucesso!');
         } catch (error) {
-            console.error('Error ao enviar a contratação:', error);
-            setAddSuccessMessage('Erro ao adicionar a contratação: ' + error.message);
+            console.error('Erro ao enviar a contratação:', error);
+            if (error.response && error.response.status === 402) {
+                setAddSuccessMessage('Artista indisponível para esta data.');
+            } else {
+                setAddSuccessMessage('Erro ao adicionar a contratação: ' + error.message);
+            }
         }
         setShowModal(false);
     }
+    
 
     // Handles user login by sending login credentials to the backend API
     function handleLogin(username, password) {
